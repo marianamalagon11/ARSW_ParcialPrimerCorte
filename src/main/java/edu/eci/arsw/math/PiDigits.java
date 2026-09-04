@@ -8,8 +8,8 @@ package edu.eci.arsw.math;
 ///  </summary>
 public class PiDigits {
 
-     static int DigitsPerSum = 8;
-     static double Epsilon = 1e-17;
+    static int DigitsPerSum = 8;
+    static double Epsilon = 1e-17;
 
     
     /**
@@ -47,27 +47,30 @@ public class PiDigits {
         return digits;
     }
 
-    // point 2
-    public static byte[] getDigits(int start, int count, int N) {
+    public static byte[] getDigits(int start, int count, int N){
         int intervalSize = count / N;
         int currentStart = start;
+
         BBPThread[] threads = new BBPThread[N];
 
         for (int i = 0; i < N; i++){
             int currentCount;
-            if(i == N - 1 ){
+            if (i == N -1){
                 currentCount = count - (intervalSize * i);
+
             } else {
                 currentCount = intervalSize;
             }
+
             BBPThread hilo = new BBPThread(currentStart, currentCount);
             threads[i] = hilo;
             hilo.start();
 
             currentStart = currentStart + currentCount;
+
         }
 
-        for (int i = 0; i < N; i++){
+        for(int i = 0; i < N; i++){
             try{
                 threads[i].join();
             } catch (InterruptedException e){
@@ -78,12 +81,13 @@ public class PiDigits {
         byte[] digits = new byte[count];
         int pos = 0;
 
-        for (int i = 0; i < N; i++ ){
-            byte[] hiloDigits = threads[i].getDigits();
-            for (int j = 0; j < hiloDigits.length; j++){
+        for(int i = 0; i < N; i++) {
+             byte[] hiloDigits = threads[i].getDigits();
+
+             for (int j = 0; j < hiloDigits.length; j++){
                 digits[pos] = hiloDigits[j];
                 pos++;
-            }
+             }
         }
         return digits;
     }
@@ -94,7 +98,7 @@ public class PiDigits {
     /// <param name="m"></param>
     /// <param name="n"></param>
     /// <returns></returns>
-    private static double sum(int m, int n) {
+    static double sum(int m, int n) {
         double sum = 0;
         int d = m;
         int power = n;
