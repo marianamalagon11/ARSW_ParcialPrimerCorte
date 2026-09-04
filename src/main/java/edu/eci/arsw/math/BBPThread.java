@@ -6,7 +6,7 @@ public class BBPThread extends Thread{
     public byte [] digits;
 
 
-    public BBPThread (){
+    public BBPThread (int start, int count){
         this.start = start;
         this.count = count;
     }
